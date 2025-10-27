@@ -1,0 +1,23 @@
+# 上传位置 /etc/systemd/system/python-tasks.service
+# sudo systemctl enable python-tasks.service 
+
+[Unit]
+Description=Run multiple python scripts via single service @bill
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/projects
+ExecStart=/bin/bash/home/ubuntu/projects/start_all.sh
+
+Restart=on-failure
+RestartSec=10
+
+# 日志输出
+StandardOutput=append:/home/ubuntu/projects/python-running-log.log
+StandardError=append:/home/ubuntu/projects/python-error-log.log
+
+[Install]
+WantedBy=multi-user.target
